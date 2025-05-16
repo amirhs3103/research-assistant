@@ -1,7 +1,8 @@
 from langchain_community.tools.semanticscholar.tool import SemanticScholarQueryRun
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_core.runnables import Runnable
-from langchain.memory import ConversationBufferMemory, StreamlitChatMessageHistory
+from langchain.memory import ConversationBufferMemory
+from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from langchain_openai.chat_models import ChatOpenAI
 from langchain.agents import AgentExecutor, ConversationalAgent
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
@@ -48,7 +49,7 @@ class LLM_Chat:
         self.llm = ChatOpenAI(model='gpt-4o-mini', streaming=True)
 
         prompt = ChatPromptTemplate.from_messages([
-            ("system", "You are a helpful expert research assistant. Use your tools to answer questions and provide sources. When relevant, search the internet for recent information."),
+            ("system", "You are a helpful expert research assistant. Use your tools to answer questions and provide sources. When relevant, search the internet for recent information. use semantic scholar and arxiv for research papers, and Wikipedia for general knowledge."),
             MessagesPlaceholder(variable_name="chat_history"),
             ("human", "{input}"),
         ])
